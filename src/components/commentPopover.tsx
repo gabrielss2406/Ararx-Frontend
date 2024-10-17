@@ -8,7 +8,7 @@ const CommentPopover = () => {
     const [comment, setComment] = useState("");
     const [open, setOpen] = useState(false);
 
-    const handleCommentChange = (e: any) => {
+    const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setComment(e.target.value);
     };
 
