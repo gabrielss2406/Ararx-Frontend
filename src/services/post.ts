@@ -15,7 +15,7 @@ api.interceptors.request.use((config) => {
 });
 
 export class PostService {
-    public async getPosts(): Promise<any[]> {
-        return []
+    public async getPosts(): Promise<void> {
+        return
     }
 }
