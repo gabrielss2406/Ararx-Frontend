@@ -34,11 +34,19 @@ export default function Home() {
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Cleiton"}
         date={"2h ago"}
+        userId={""}
+        likesCount={0}
+        commentsCount={0}
+        repliesCount={0}
       />
       <Post
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Jorge"}
         date={"4d ago"}
+        userId={""}
+        likesCount={0}
+        commentsCount={0}
+        repliesCount={0}
       />
     </div>
   );
