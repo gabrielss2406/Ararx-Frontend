@@ -32,21 +32,21 @@ export default function Home() {
 
       <Post
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
-        author={"Cleiton"}
+        author={"Nannie Mason"}
         date={"2h ago"}
         userId={"32132131231"}
-        likesCount={0}
-        commentsCount={0}
-        repliesCount={0}
+        likesCount={92}
+        commentsCount={37}
+        repliesCount={78}
       />
       <Post
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Jorge"}
         date={"4d ago"}
         userId={"3123123123"}
-        likesCount={0}
-        commentsCount={0}
-        repliesCount={0}
+        likesCount={78}
+        commentsCount={61}
+        repliesCount={90}
       />
     </div>
   );

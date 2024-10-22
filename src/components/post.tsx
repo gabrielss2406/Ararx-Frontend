@@ -49,7 +49,6 @@ export const Post: React.FC<PostProps> = ({
             <div className="flex flex-col w-full">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        {/* Link para o perfil através do nome */}
                         <Link href={`/profile/${userId}`}>
                             <span className="font-semibold text-white cursor-pointer hover:underline">
                                 {author}
@@ -76,10 +75,8 @@ export const Post: React.FC<PostProps> = ({
                             <span>{likes}</span>
                         </button>
 
-                        {/* Comentário (Popover para abrir textarea) */}
                         <CommentPopover />
 
-                        {/* Botão de compartilhar com Popover */}
                         <Popover>
                             <PopoverTrigger asChild>
                                 <button className="flex items-center gap-1 text-gray-400 hover:text-blue-500 transition-colors duration-200">
@@ -95,7 +92,6 @@ export const Post: React.FC<PostProps> = ({
                         </Popover>
                     </div>
 
-                    {/* Contador de comentários e respostas */}
                     <div className="flex gap-6 text-gray-400">
                         <div className="flex items-center gap-1">
                             <FaRegComment />

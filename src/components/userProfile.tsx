@@ -1,7 +1,4 @@
-// UserProfile.tsx
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { FaUser, FaRegHeart, FaRegComment, FaRegShareSquare } from "react-icons/fa";
-import { useState } from "react";
 import Post from "./post";
 
 interface UserProfileProps {
@@ -24,9 +21,6 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
-    const [followers, setFollowers] = useState(user.followersCount);
-    const [following, setFollowing] = useState(user.followingCount);
-
     return (
         <div className="container mx-auto p-6">
             <div className="flex flex-col items-center">
@@ -44,11 +38,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 
                 <div className="flex gap-4 mt-4">
                     <div className="flex flex-col items-center">
-                        <span className="font-semibold text-white">{followers}</span>
+                        <span className="font-semibold text-white">{user.followersCount}</span>
                         <span className="text-gray-400">Seguidores</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="font-semibold text-white">{following}</span>
+                        <span className="font-semibold text-white">{user.followingCount}</span>
                         <span className="text-gray-400">Seguindo</span>
                     </div>
                 </div>
