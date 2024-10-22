@@ -34,7 +34,7 @@ export default function Home() {
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Cleiton"}
         date={"2h ago"}
-        userId={""}
+        userId={"32132131231"}
         likesCount={0}
         commentsCount={0}
         repliesCount={0}
@@ -43,7 +43,7 @@ export default function Home() {
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Jorge"}
         date={"4d ago"}
-        userId={""}
+        userId={"3123123123"}
         likesCount={0}
         commentsCount={0}
         repliesCount={0}
