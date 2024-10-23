@@ -45,7 +45,7 @@ const PostPage: React.FC = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-[#15202B] rounded-lg border border-gray-700">
+        <div className="max-w-2xl mx-auto p-6 bg-gray-900 rounded-lg border border-gray-700">
             <HomeButton />
             <div className="flex flex-row items-start gap-4 mt-6">
                 <Link href={`/profile/${post.userId}`} passHref>
