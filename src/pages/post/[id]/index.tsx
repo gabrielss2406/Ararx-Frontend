@@ -4,31 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import HomeButton from "@/components/homeButton";
+import { PostDetailsType } from "@/models/Post";
 
-interface CommentProps {
-    id: string;
-    content: string;
-    author: string;
-    date: string;
-    userId: string;
-}
-
-interface PostDetailsProps {
-    id: string;
-    content: string;
-    author: string;
-    date: string;
-    userId: string;
-    likesCount: number;
-    repliesCount: number;
-    comments: CommentProps[];
-}
-
-const PostPage = () => {
+const PostPage: React.FC = () => {
     const router = useRouter();
     const { id: postId } = router.query;
 
-    const post: PostDetailsProps = {
+    const post: PostDetailsType = {
         id: postId as string,
         content: "Este é um post exemplo para visualização!",
         author: "Carlos Nunes",

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import UserProfile from "@/components/userProfile";
 import HomeButton from "@/components/homeButton";
 
-const UserProfilePage = () => {
+const UserProfilePage: React.FC = () => {
     const router = useRouter();
     const { id: userId } = router.query;
 
