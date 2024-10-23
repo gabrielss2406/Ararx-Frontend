@@ -3,10 +3,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function Home() {
+const Home = () => {
   return (
-    <div className="h-screen w-full bg-[#15202B]">
-
+    <div className="h-screen w-full bg-[#15202B] px-[10%]">
       <div className="flex flex-row items-start gap-4 p-4 bg-gray-900 rounded-lg border border-gray-700">
         <Avatar>
           <AvatarImage
@@ -31,6 +30,7 @@ export default function Home() {
       </div>
 
       <Post
+        postId={"91915"}
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Nannie Mason"}
         date={"2h ago"}
@@ -40,6 +40,7 @@ export default function Home() {
         repliesCount={78}
       />
       <Post
+        postId={"27025"}
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Jorge"}
         date={"4d ago"}
@@ -51,3 +52,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import UserProfile from "@/components/userProfile";
+import HomeButton from "@/components/homeButton";
 
 const UserProfilePage = () => {
     const router = useRouter();
-    const { userId } = router.query;
+    const { id: userId } = router.query;
 
     const user = {
         id: userId as string,
@@ -31,7 +32,12 @@ const UserProfilePage = () => {
         ],
     };
 
-    return <UserProfile user={user} />;
+    return (
+        <div className="container mx-auto p-6">
+            <HomeButton />
+            <UserProfile user={user} />
+        </div>
+    );
 };
 
 export default UserProfilePage;

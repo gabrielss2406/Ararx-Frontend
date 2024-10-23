@@ -54,6 +54,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
                     {user.posts.map((post) => (
                         <div key={post.id}>
                             <Post
+                                postId={"64971"}
                                 content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
                                 author={"Jorge"}
                                 date={"4d ago"}
