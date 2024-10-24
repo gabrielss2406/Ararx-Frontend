@@ -24,9 +24,8 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
     return (
         <div className="container mx-auto p-6">
             <div className="flex flex-col items-center">
-                <Avatar>
+                <Avatar className="w-20 h-20">
                     <AvatarImage
-                        className="w-24 h-24 rounded-full"
                         src={user.avatarUrl}
                         alt="User avatar"
                     />

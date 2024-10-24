@@ -37,11 +37,10 @@ export const Post: React.FC<PostProps> = ({
     };
 
     return (
-        <div className="flex flex-row items-start gap-4 p-4 bg-gray-900 rounded-lg border border-gray-700 cursor-pointer hover:bg-gray-800 transition-colors duration-200">
+        <div className="flex flex-col md:flex-row items-start gap-4 p-4 bg-gray-900 rounded-lg border border-gray-700 cursor-pointer hover:bg-gray-800 transition-colors duration-200 w-full">
             <Link href={`/profile/${userId}`}>
                 <Avatar className="cursor-pointer">
                     <AvatarImage
-                        className="w-12 h-12 rounded-full"
                         src="https://github.com/shadcn.png"
                         alt="User avatar"
                     />
@@ -50,22 +49,31 @@ export const Post: React.FC<PostProps> = ({
             </Link>
 
             <div className="flex flex-col w-full">
-                <Link href={`/post/${postId}`} className="flex flex-col w-full">
+                <div className="flex flex-col w-full z-0" onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/post/${postId}`);
+                }}>
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2" onClick={async () => await router.push(`/profile/${userId}`)}>
-                            <span className="font-semibold text-white cursor-pointer hover:underline">
+                        <div className="flex items-center gap-2">
+                            <span
+                                className="font-semibold text-white cursor-pointer hover:underline text-sm md:text-base"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    router.push(`/profile/${userId}`);
+                                }}
+                            >
                                 {author}
                             </span>
-                            <span className="text-sm text-gray-400">@{author}</span>
+                            <span className="text-xs md:text-sm text-gray-400">@{author}</span>
                         </div>
-                        <span className="text-sm text-gray-400">{date}</span>
+                        <span className="text-xs md:text-sm text-gray-400">{date}</span>
                     </div>
 
-                    <p className="mt-2 text-gray-200">{content}</p>
-                </Link>
+                    <p className="mt-2 text-gray-200 text-sm md:text-base">{content}</p>
+                </div>
 
-                <div className="flex items-center justify-between mt-4">
-                    <div className="flex gap-6">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between mt-4 gap-4 md:gap-0">
+                    <div className="flex gap-4 md:gap-6">
                         <button
                             className="flex items-center gap-1 text-gray-400 hover:text-blue-500 transition-colors duration-200"
                             onClick={(e) => {
@@ -94,14 +102,14 @@ export const Post: React.FC<PostProps> = ({
                         </Popover>
                     </div>
 
-                    <div className="flex gap-6 text-gray-400">
+                    <div className="flex gap-4 md:gap-6 text-gray-400">
                         <div className="flex items-center gap-1">
                             <FaRegComment />
-                            <span>{commentsCount} comentários</span>
+                            <span className="text-xs md:text-sm">{commentsCount} comentários</span>
                         </div>
                         <div className="flex items-center gap-1">
                             <FaRegComment />
-                            <span>{repliesCount} respostas</span>
+                            <span className="text-xs md:text-sm">{repliesCount} respostas</span>
                         </div>
                     </div>
                 </div>

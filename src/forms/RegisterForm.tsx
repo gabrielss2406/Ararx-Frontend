@@ -1,101 +1,139 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterFormSchema, RegisterFormType } from "@/models/User";
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { UserService } from "@/services/user";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
 
-interface RegisterFormProps {
-    onSubmit: (data: RegisterFormType) => void;
-}
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<RegisterFormType>({
+
+export default function RegisterForm() {
+    const [loading, setLoading] = useState(false);
+    const router = useRouter()
+
+    const form = useForm<RegisterFormType>({
+        mode: "all",
         resolver: zodResolver(RegisterFormSchema),
-    });
+    })
 
+    async function onSubmit(values: RegisterFormType) {
+        const userService = new UserService();
+        setLoading(true);
+        try {
+            await userService.register(values);
+            toast.success("Usuário criado com sucesso!")
+            router.push("/login")
+        } catch (error) {
+            toast.error("Erro ao criar usuário")
+        } finally {
+            setLoading(false);
+        }
+    }
     return (
-        <form
-            className="space-y-4 max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg"
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-300">
-                    Nome
-                </label>
-                <input
-                    id="name"
-                    type="text"
-                    {...register("name")}
-                    className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.name ? "border-red-500 focus:ring-red-500" : ""
-                        }`}
-                    placeholder="Seu nome"
-                />
-                {errors.name && (
-                    <p className="text-red-500 text-sm mt-1">{errors.name?.message}</p>
-                )}
-            </div>
-
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                    Email
-                </label>
-                <input
-                    id="email"
-                    type="email"
-                    {...register("email")}
-                    className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? "border-red-500 focus:ring-red-500" : ""
-                        }`}
-                    placeholder="Seu email"
-                />
-                {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
-                )}
-            </div>
-
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                    Senha
-                </label>
-                <input
-                    id="password"
-                    type="password"
-                    {...register("password")}
-                    className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.password ? "border-red-500 focus:ring-red-500" : ""
-                        }`}
-                    placeholder="Sua senha"
-                />
-                {errors.password && (
-                    <p className="text-red-500 text-sm mt-1">{errors.password?.message}</p>
-                )}
-            </div>
-
-            <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300">
-                    Confirmar Senha
-                </label>
-                <input
-                    id="confirmPassword"
-                    type="password"
-                    {...register("confirmPassword")}
-                    className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.confirmPassword ? "border-red-500 focus:ring-red-500" : ""
-                        }`}
-                    placeholder="Confirme sua senha"
-                />
-                {errors.confirmPassword && (
-                    <p className="text-red-500 text-sm mt-1">{errors.confirmPassword?.message}</p>
-                )}
-            </div>
-
-            <button
-                type="submit"
-                className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors duration-200"
+        <Form {...form}>
+            <form
+                className="space-y-4 max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg"
+                onSubmit={form.handleSubmit(onSubmit)}
             >
-                Registrar
-            </button>
-        </form>
+                {/* Campo Nome */}
+                <FormField
+                    name="handler"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Nome</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="name"
+                                    placeholder="Seu nome"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Campo Email */}
+                <FormField
+                    name="email"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="Seu email"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Campo Senha */}
+                <FormField
+                    name="password"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Senha</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="password"
+                                    type="password"
+                                    placeholder="Sua senha"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Campo Confirmar Senha */}
+                <FormField
+                    name="confirmPassword"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Confirmar Senha</FormLabel>
+                            <FormControl>
+                                <Input
+                                    id="confirmPassword"
+                                    type="password"
+                                    placeholder="Confirme sua senha"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Botão de Registrar */}
+                <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-blue-500 hover:bg-blue-600"
+                >
+                    {loading ? "Carregando..." : "Registrar"}
+                </Button>
+            </form>
+        </Form>
     );
 };
-
-export default RegisterForm;

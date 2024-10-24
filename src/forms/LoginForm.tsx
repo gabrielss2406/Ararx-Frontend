@@ -1,67 +1,93 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormType, LoginFormSchema } from "@/models/User";
+import { Button } from "@/components/ui/button";
+import {
+    Form,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormControl,
+    FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
+import { UserService } from "@/services/user";
 
-interface LoginFormProps {
-    onSubmit: (data: LoginFormType) => void;
-}
+export default function LoginForm() {
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<LoginFormType>({
+    const form = useForm<LoginFormType>({
+        mode: "all",
         resolver: zodResolver(LoginFormSchema),
-    });
+    })
+
+    async function onSubmit(values: LoginFormType) {
+        const userService = new UserService();
+        setLoading(true);
+        try {
+            await userService.login(values.email, values.password);
+            toast.success("Usuário logado com sucesso!")
+            router.push("/");
+        } catch (error) {
+            toast.error("Erro ao fazer login!")
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
-        <form
-            className="space-y-4 max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg"
-            onSubmit={handleSubmit(onSubmit)}
-        >
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                    Email
-                </label>
-                <input
-                    id="email"
-                    type="email"
-                    {...register("email")}
-                    className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? "border-red-500 focus:ring-red-500" : ""
-                        }`}
-                    placeholder="Seu email"
-                />
-                {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email?.message}</p>
-                )}
-            </div>
-
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                    Senha
-                </label>
-                <input
-                    id="password"
-                    type="password"
-                    {...register("password")}
-                    className={`w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.password ? "border-red-500 focus:ring-red-500" : ""
-                        }`}
-                    placeholder="Sua senha"
-                />
-                {errors.password && (
-                    <p className="text-red-500 text-sm mt-1">{errors.password?.message}</p>
-                )}
-            </div>
-
-            <button
-                type="submit"
-                className="w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg transition-colors duration-200"
+        <Form {...form}>
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4 max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-lg"
             >
-                Entrar
-            </button>
-        </form>
-    );
-};
+                <FormField
+                    name="email"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email ou nome de usuário</FormLabel>
+                            <FormControl>
+                                <Input
+                                    placeholder="Seu email ou username"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
 
-export default LoginForm;
+                <FormField
+                    name="password"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Senha</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="password"
+                                    placeholder="Sua senha"
+                                    {...field}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-blue-500 hover:bg-blue-600"
+                >
+                    {loading ? "Carregando..." : "Entrar"}
+                </Button>
+            </form>
+        </Form>
+    );
+}

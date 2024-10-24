@@ -5,7 +5,7 @@ const HomeButton: React.FC = () => {
     const router = useRouter();
 
     const handleBackToHome = () => {
-        router.push("/");
+        router.back();
     };
 
     return (
@@ -14,7 +14,7 @@ const HomeButton: React.FC = () => {
             onClick={handleBackToHome}
         >
             <FaArrowLeft />
-            <span>Voltar para Home</span>
+            <span>Voltar</span>
         </button>
     );
 };
