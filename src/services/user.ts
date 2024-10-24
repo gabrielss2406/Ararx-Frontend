@@ -32,6 +32,10 @@ export class UserService {
         try {
             const { confirmPassword, ...data } = values;
 
+            if (values.password !== confirmPassword) {
+                throw new Error('As senhas não coincidem');
+            }
+
             const response = await api.post('/register', data);
 
             return response.data;
@@ -45,7 +49,7 @@ export class UserService {
     public async logout() {
         try {
             Cookies.remove('_ararx_token');
-        } catch (error) {
+        } catch {
             throw new Error('Logout failed');
         }
     }

@@ -2,11 +2,6 @@ import LoginForm from "@/forms/LoginForm";
 import Link from "next/link";
 
 const LoginPage = () => {
-
-    const handleLoginSubmit = (data: { email: string; password: string }) => {
-        console.log("Login data:", data);
-    };
-
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-900">
             <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-md">

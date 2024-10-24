@@ -32,7 +32,7 @@ export default function LoginForm() {
             await userService.login(values.email, values.password);
             toast.success("Usuário logado com sucesso!")
             router.push("/");
-        } catch (error) {
+        } catch {
             toast.error("Erro ao fazer login!")
         } finally {
             setLoading(false);
