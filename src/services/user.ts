@@ -67,6 +67,7 @@ export class UserService {
 
         try {
             const response = await api.get(`/user/${userHandler}`);
+            console.log(response.data)
             return response.data;
         } catch (error) {
             console.error(error)

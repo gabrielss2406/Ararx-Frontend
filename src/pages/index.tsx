@@ -34,7 +34,7 @@ const Home: React.FC = () => {
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Nannie Mason"}
         date={"2h ago"}
-        userId={"32132131231"}
+        userId={"ElPandaMx"}
         likesCount={92}
         commentsCount={37}
         repliesCount={78}
@@ -44,7 +44,7 @@ const Home: React.FC = () => {
         content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
         author={"Jorge"}
         date={"4d ago"}
-        userId={"3123123123"}
+        userId={"ElPandaMx"}
         likesCount={78}
         commentsCount={61}
         repliesCount={90}

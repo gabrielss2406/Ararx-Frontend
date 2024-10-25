@@ -1,6 +1,7 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Post from "./post";
 import { UserProfileType } from "@/models/User";
+import ProfilePicture from "./profilePicture";
 
 interface UserProfileProps {
     user?: UserProfileType;
@@ -11,11 +12,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
         <div className="container mx-auto p-6">
             <div className="flex flex-col items-center">
                 <Avatar className="w-20 h-20">
-                    <AvatarImage
-                        src={"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"}
-                        alt="User avatar"
-                    />
-                    <AvatarFallback>{user?.username}</AvatarFallback>
+                    <ProfilePicture handler={user?.handler || ""} />
                 </Avatar>
                 <h1 className="text-2xl font-bold mt-4">{user?.username}</h1>
                 <span className="text-sm text-gray-400">@{user?.handler}</span>
@@ -23,11 +20,11 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
 
                 <div className="flex gap-4 mt-4">
                     <div className="flex flex-col items-center">
-                        <span className="font-semibold text-white">{/*user.followersCount*/0}</span>
+                        <span className="font-semibold text-white">{user?.followers.length}</span>
                         <span className="text-gray-400">Seguidores</span>
                     </div>
                     <div className="flex flex-col items-center">
-                        <span className="font-semibold text-white">{/*user.followingCount*/0}</span>
+                        <span className="font-semibold text-white">{user?.following.length}</span>
                         <span className="text-gray-400">Seguindo</span>
                     </div>
                 </div>

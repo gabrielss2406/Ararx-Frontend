@@ -18,7 +18,9 @@ export const RegisterFormSchema = z.object({
 export const UserProfileSchema = z.object({
     bio: z.string(),
     handler: z.string(),
-    username: z.string()
+    username: z.string(),
+    followers: z.array(z.object({})),
+    following: z.array(z.object({}))
 })
 
 export type LoginFormType = z.infer<typeof LoginFormSchema>;

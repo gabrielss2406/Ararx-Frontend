@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import ProfilePicture from "./profilePicture";
 
 interface PostProps {
     content: string;
@@ -40,11 +41,7 @@ export const Post: React.FC<PostProps> = ({
         <div className="flex flex-col md:flex-row items-start gap-4 p-4 bg-gray-900 rounded-lg border border-gray-700 cursor-pointer hover:bg-gray-800 transition-colors duration-200 w-full">
             <Link href={`/profile/${userId}`}>
                 <Avatar className="cursor-pointer">
-                    <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="User avatar"
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <ProfilePicture handler={author || ""} />
                 </Avatar>
             </Link>
 
