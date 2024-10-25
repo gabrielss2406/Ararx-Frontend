@@ -1,5 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import Post from "./post";
+import { Avatar } from "@/components/ui/avatar";
 import { UserProfileType } from "@/models/User";
 import ProfilePicture from "./profilePicture";
 

@@ -1,6 +1,6 @@
 import api from './api';
 import Cookies from 'js-cookie';
-import { RegisterFormType } from '@/models/User';
+import { RegisterFormType, UserProfileType } from '@/models/User';
 
 export class UserService {
     public async login(username: string, password: string) {
@@ -54,7 +54,7 @@ export class UserService {
         }
     }
 
-    public async getUser(userHandler: string): Promise<any> {
+    public async getUser(userHandler: string): Promise<UserProfileType> {
         api.interceptors.request.use((config) => {
             const token = Cookies.get('_cnctfarm_token');
             if (token) {
