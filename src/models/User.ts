@@ -15,6 +15,12 @@ export const RegisterFormSchema = z.object({
     path: ["confirmPassword"],
 });
 
+export const UserProfileSchema = z.object({
+    bio: z.string(),
+    handler: z.string(),
+    username: z.string()
+})
 
 export type LoginFormType = z.infer<typeof LoginFormSchema>;
 export type RegisterFormType = z.infer<typeof RegisterFormSchema>;
+export type UserProfileType = z.infer<typeof UserProfileSchema>;

@@ -53,4 +53,24 @@ export class UserService {
             throw new Error('Logout failed');
         }
     }
+
+    public async getUser(userHandler: string): Promise<any> {
+        api.interceptors.request.use((config) => {
+            const token = Cookies.get('_cnctfarm_token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        }, (error) => {
+            return Promise.reject(error);
+        });
+
+        try {
+            const response = await api.get(`/user/${userHandler}`);
+            return response.data;
+        } catch (error) {
+            console.error(error)
+            throw new Error('Register failed');
+        }
+    }
 }
