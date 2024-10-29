@@ -11,11 +11,18 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ handler }) => {
         return colors[hash % colors.length];
     };
 
-    const initials = handler
-        .split(" ")
-        .map(word => word[0].toUpperCase())
-        .join("")
-        .slice(0, 2);
+    var initials;
+
+    if (handler) {
+        initials = handler
+            .split(" ")
+            .map(word => word[0].toUpperCase())
+            .join("")
+            .slice(0, 2);
+    } else {
+        initials = ""
+    }
+
 
     return (
         <div

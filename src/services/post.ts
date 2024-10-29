@@ -1,6 +1,7 @@
 import api from './api';
 import Cookies from 'js-cookie';
 import dotenv from 'dotenv';
+import { PostType } from '@/models/Post';
 
 dotenv.config();
 
@@ -15,7 +16,25 @@ api.interceptors.request.use((config) => {
 });
 
 export class PostService {
-    public async getPosts(): Promise<void> {
-        return
+    public async getPosts(page_num: number, page_size: number): Promise<PostType[]> {
+        try {
+            const response = await api.get(`/posts?page_num=${page_num}&page_size=${page_size}`);
+            return response.data;
+        } catch (error) {
+            console.error(error)
+            throw new Error('Register failed');
+        }
+    }
+
+
+    public async getPostsFromUser(page_num: number, page_size: number, user_handler?: string): Promise<PostType[]> {
+        try {
+            if (!user_handler) throw Error
+            const response = await api.get(`/posts/author/${user_handler}?page_num=${page_num}&page_size=${page_size}`);
+            return response.data;
+        } catch (error) {
+            console.error(error)
+            throw new Error('Register failed');
+        }
     }
 }

@@ -10,7 +10,6 @@ interface PostProps {
     content: string;
     author: string;
     date: string;
-    userId: string;
     postId: string;
     likesCount: number;
     commentsCount: number;
@@ -21,7 +20,6 @@ export const Post: React.FC<PostProps> = ({
     content,
     author,
     date,
-    userId,
     postId,
     likesCount,
     commentsCount,
@@ -39,7 +37,7 @@ export const Post: React.FC<PostProps> = ({
 
     return (
         <div className="flex flex-col md:flex-row items-start gap-4 p-4 bg-gray-900 rounded-lg border border-gray-700 cursor-pointer hover:bg-gray-800 transition-colors duration-200 w-full">
-            <Link href={`/profile/${userId}`}>
+            <Link href={`/profile/${author}`}>
                 <Avatar className="cursor-pointer">
                     <ProfilePicture handler={author || ""} />
                 </Avatar>
@@ -56,12 +54,11 @@ export const Post: React.FC<PostProps> = ({
                                 className="font-semibold text-white cursor-pointer hover:underline text-sm md:text-base"
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    router.push(`/profile/${userId}`);
+                                    router.push(`/profile/${author}`);
                                 }}
                             >
-                                {author}
+                                <span className="text-xs md:text-sm text-gray-400">@{author}</span>
                             </span>
-                            <span className="text-xs md:text-sm text-gray-400">@{author}</span>
                         </div>
                         <span className="text-xs md:text-sm text-gray-400">{date}</span>
                     </div>

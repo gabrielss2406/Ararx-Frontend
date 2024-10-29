@@ -1,17 +1,43 @@
 import { Avatar } from "@/components/ui/avatar";
 import { UserProfileType } from "@/models/User";
 import ProfilePicture from "./profilePicture";
+import { useEffect, useState } from "react";
+import { PostService } from "@/services/post";
+import { PostType } from "@/models/Post";
+import Post from "./post";
 
 interface UserProfileProps {
     user?: UserProfileType;
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
+    const [posts, setPosts] = useState<PostType[]>([]);
+    const [pageNum, setPageNum] = useState(1);
+    const pageSize = 10;
+    const [loading, setLoading] = useState(false);
+    const dataService = new PostService();
+
+    useEffect(() => {
+        const loadPosts = async () => {
+            setLoading(true);
+            try {
+                const response = await dataService.getPostsFromUser(pageNum, pageSize, user?.handler);
+                console.log(response)
+                setPosts(response);
+            } catch (error) {
+                console.error("Failed to load posts:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadPosts();
+    }, [pageNum]);
+
     return (
         <div className="container mx-auto p-6">
             <div className="flex flex-col items-center">
                 <Avatar className="w-20 h-20">
-                    <ProfilePicture handler={user?.handler || ""} />
+                    <ProfilePicture handler={user?.handler || "Username"} />
                 </Avatar>
                 <h1 className="text-2xl font-bold mt-4">{user?.username}</h1>
                 <span className="text-sm text-gray-400">@{user?.handler}</span>
@@ -32,20 +58,21 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
             <div className="mt-6">
                 <h2 className="text-xl font-bold">Posts</h2>
                 <div className="space-y-4 mt-4">
-                    {/* {user.posts.map((post) => (
-                        <div key={post.id}>
+                    {posts.map((post, index) => (
+                        <div
+                            key={post._id}
+                        >
                             <Post
-                                postId={"64971"}
-                                content={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et cursus diam. Fusce sed rutrum sapien. Donec ex purus, tincidunt at libero a, lobortis malesuada quam."}
-                                author={"Jorge"}
-                                date={"4d ago"}
-                                userId={"3123123123"}
-                                likesCount={0}
-                                commentsCount={0}
-                                repliesCount={0}
+                                postId={post._id}
+                                content={post.content}
+                                author={post.author}
+                                date={post.date}
+                                likesCount={post.likes.length}
+                                commentsCount={post.comments.length}
+                                repliesCount={post.reposts.length}
                             />
                         </div>
-                    ))} */}
+                    ))}
                 </div>
             </div>
         </div>
