@@ -21,17 +21,15 @@ const PostPage: React.FC = () => {
         comments: [
             {
                 id: "1",
-                content: "Ótimo post!",
-                author: "Ana Silva",
+                comment: "Ótimo post!",
                 date: "1 hora atrás",
-                userId: "2",
+                author: "2",
             },
             {
                 id: "2",
-                content: "Muito interessante, obrigado por compartilhar!",
-                author: "Pedro Almeida",
+                comment: "Muito interessante, obrigado por compartilhar!",
                 date: "30 minutos atrás",
-                userId: "3",
+                author: "3",
             },
         ],
     };

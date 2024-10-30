@@ -5,6 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ProfilePicture from "./profilePicture";
+import { PostInteractService } from "@/services/postInteract";
 
 interface PostProps {
     content: string;
@@ -26,13 +27,23 @@ export const Post: React.FC<PostProps> = ({
     repliesCount,
 }) => {
     const router = useRouter();
-
     const [likes, setLikes] = useState(likesCount);
     const [liked, setLiked] = useState(false);
+    const postInteractService = new PostInteractService();
 
-    const handleLike = () => {
-        setLiked(!liked);
-        setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    const handleLike = async () => {
+        try {
+            if (liked) {
+                await postInteractService.dislike(postId);
+                setLikes((prev) => prev - 1);
+            } else {
+                await postInteractService.like(postId);
+                setLikes((prev) => prev + 1);
+            }
+            setLiked(!liked);
+        } catch (error) {
+            console.error("Erro ao curtir ou remover curtida no post:", error);
+        }
     };
 
     return (
@@ -81,7 +92,7 @@ export const Post: React.FC<PostProps> = ({
                             <span>{likes}</span>
                         </button>
 
-                        <Popover>
+                        {/* <Popover>
                             <PopoverTrigger asChild>
                                 <button className="flex items-center gap-1 text-gray-400 hover:text-blue-500 transition-colors duration-200">
                                     <FaShareAlt />
@@ -93,7 +104,7 @@ export const Post: React.FC<PostProps> = ({
                                     <li className="hover:underline cursor-pointer">Repostar</li>
                                 </ul>
                             </PopoverContent>
-                        </Popover>
+                        </Popover> */}
                     </div>
 
                     <div className="flex gap-4 md:gap-6 text-gray-400">

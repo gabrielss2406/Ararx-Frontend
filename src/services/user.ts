@@ -56,7 +56,7 @@ export class UserService {
 
     public async getUser(userHandler: string): Promise<UserProfileType> {
         api.interceptors.request.use((config) => {
-            const token = Cookies.get('_cnctfarm_token');
+            const token = Cookies.get('_ararx_token');
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }

@@ -6,7 +6,7 @@ import { PostType } from '@/models/Post';
 dotenv.config();
 
 api.interceptors.request.use((config) => {
-    const token = Cookies.get('_cnctfarm_token');
+    const token = Cookies.get('_ararx_token');
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
@@ -16,16 +16,38 @@ api.interceptors.request.use((config) => {
 });
 
 export class PostService {
+    public async createPost(content: string): Promise<void> {
+        try {
+            console.log(content)
+            await api.post(`/posts/`, {
+                content: content
+            });
+        } catch (error) {
+            console.error(error)
+            throw new Error('Create post failed');
+        }
+    }
+
     public async getPosts(page_num: number, page_size: number): Promise<PostType[]> {
         try {
             const response = await api.get(`/posts?page_num=${page_num}&page_size=${page_size}`);
             return response.data;
         } catch (error) {
             console.error(error)
-            throw new Error('Register failed');
+            throw new Error('Get feed posts failed');
         }
     }
 
+
+    public async getPostsById(postId: string): Promise<PostType> {
+        try {
+            const response = await api.get(`/posts/${postId}`);
+            return response.data;
+        } catch (error) {
+            console.error(error)
+            throw new Error('Get post failed');
+        }
+    }
 
     public async getPostsFromUser(page_num: number, page_size: number, user_handler?: string): Promise<PostType[]> {
         try {
@@ -34,7 +56,7 @@ export class PostService {
             return response.data;
         } catch (error) {
             console.error(error)
-            throw new Error('Register failed');
+            throw new Error('Get user posts failed');
         }
     }
 }
