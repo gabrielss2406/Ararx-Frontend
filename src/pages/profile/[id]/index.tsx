@@ -15,7 +15,7 @@ const UserProfilePage: React.FC = () => {
     const { id: userId } = router.query;
 
     useEffect(() => {
-        const fetchFarms = async () => {
+        const fetchPosts = async () => {
             try {
                 setLoading(true);
                 if (!userId) return;
@@ -28,7 +28,7 @@ const UserProfilePage: React.FC = () => {
             setLoading(false);
         };
 
-        fetchFarms();
+        fetchPosts();
     }, [userId]);
 
     return (

@@ -1,17 +1,18 @@
 import { Avatar } from "@/components/ui/avatar";
-import { FaRegHeart, FaShareAlt, FaRegComment } from "react-icons/fa";
+import { FaRegHeart, FaRegComment, FaHeart } from "react-icons/fa";
 import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import ProfilePicture from "./profilePicture";
 import { PostInteractService } from "@/services/postInteract";
+import { formatPostDate } from "./helpers/formatDate";
 
 interface PostProps {
     content: string;
     author: string;
     date: string;
     postId: string;
+    isLiked: boolean;
     likesCount: number;
     commentsCount: number;
     repliesCount: number;
@@ -22,13 +23,14 @@ export const Post: React.FC<PostProps> = ({
     author,
     date,
     postId,
+    isLiked,
     likesCount,
     commentsCount,
     repliesCount,
 }) => {
     const router = useRouter();
     const [likes, setLikes] = useState(likesCount);
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(isLiked);
     const postInteractService = new PostInteractService();
 
     const handleLike = async () => {
@@ -71,7 +73,7 @@ export const Post: React.FC<PostProps> = ({
                                 <span className="text-xs md:text-sm text-gray-400">@{author}</span>
                             </span>
                         </div>
-                        <span className="text-xs md:text-sm text-gray-400">{date}</span>
+                        <span className="text-xs md:text-sm text-gray-400">{formatPostDate(date)}</span>
                     </div>
 
                     <p className="mt-2 text-gray-200 text-sm md:text-base">{content}</p>
@@ -86,9 +88,11 @@ export const Post: React.FC<PostProps> = ({
                                 handleLike();
                             }}
                         >
-                            <FaRegHeart
-                                className={`transition-transform duration-200 ${liked ? "text-red-500 scale-125" : ""}`}
-                            />
+                            {liked ? (
+                                <FaHeart className={`transition-transform duration-200 transform text-red-500`} />
+                            ) : (
+                                <FaRegHeart className={`transition-transform duration-200 ${liked ? "text-red-500" : ""} transform scale-100`} />
+                            )}
                             <span>{likes}</span>
                         </button>
 

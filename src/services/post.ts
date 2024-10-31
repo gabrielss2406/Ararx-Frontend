@@ -2,6 +2,7 @@ import api from './api';
 import Cookies from 'js-cookie';
 import dotenv from 'dotenv';
 import { PostType } from '@/models/Post';
+import { compareDesc, parseISO } from 'date-fns';
 
 dotenv.config();
 
@@ -31,15 +32,15 @@ export class PostService {
     public async getPosts(page_num: number, page_size: number): Promise<PostType[]> {
         try {
             const response = await api.get(`/posts?page_num=${page_num}&page_size=${page_size}`);
-            return response.data;
+            console.log(response.data)
+            return response.data.sort((a: PostType, b: PostType) => compareDesc(parseISO(a.date), parseISO(b.date)));
         } catch (error) {
             console.error(error)
             throw new Error('Get feed posts failed');
         }
     }
 
-
-    public async getPostsById(postId: string): Promise<PostType> {
+    public async getPostById(postId: string): Promise<PostType> {
         try {
             const response = await api.get(`/posts/${postId}`);
             return response.data;

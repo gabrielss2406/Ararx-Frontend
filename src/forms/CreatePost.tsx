@@ -10,7 +10,7 @@ const postSchema = z.object({
 });
 
 interface CreatePostFormProps {
-    onPostCreated: () => void; // Chama essa função ao criar um post para atualizar a lista
+    onPostCreated: () => void;
 }
 
 const CreatePostForm: React.FC<CreatePostFormProps> = ({ onPostCreated }) => {
@@ -42,10 +42,10 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({ onPostCreated }) => {
     };
 
     return (
-        <div className="flex flex-col w-full bg-gray-900 p-4 rounded-lg border border-gray-700">
+        <div className="flex flex-col w-full">
             <Textarea
                 placeholder="O que está acontecendo?"
-                className="w-full h-24 p-2 bg-gray-800 text-gray-200 placeholder-gray-500 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full h-24 p-4 bg-gray-800 text-gray-200 placeholder-gray-500 rounded-lg border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 disabled={loading}

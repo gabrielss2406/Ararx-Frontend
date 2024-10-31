@@ -11,7 +11,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ handler }) => {
         return colors[hash % colors.length];
     };
 
-    var initials;
+    let initials;
 
     if (handler) {
         initials = handler

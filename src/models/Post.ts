@@ -21,10 +21,11 @@ const CommentSchema: z.ZodType<Comment> = z.object({
     comments: z.array(z.lazy(() => CommentSchema))
 });
 
-const PostSchema = z.object({
+export const PostSchema = z.object({
     _id: z.string(),
     author: z.string(),
     content: z.string(),
+    isLiked: z.boolean(),
     date: z.string().datetime({ offset: true }),
     likes: z.array(z.string()),
     reposts: z.array(z.string()),
