@@ -25,8 +25,7 @@ export const Post: React.FC<PostProps> = ({
     postId,
     isLiked,
     likesCount,
-    commentsCount,
-    repliesCount,
+    commentsCount
 }) => {
     const router = useRouter();
     const [likes, setLikes] = useState(likesCount);
@@ -95,30 +94,12 @@ export const Post: React.FC<PostProps> = ({
                             )}
                             <span>{likes}</span>
                         </button>
-
-                        {/* <Popover>
-                            <PopoverTrigger asChild>
-                                <button className="flex items-center gap-1 text-gray-400 hover:text-blue-500 transition-colors duration-200">
-                                    <FaShareAlt />
-                                    <span>Compartilhar</span>
-                                </button>
-                            </PopoverTrigger>
-                            <PopoverContent className="bg-gray-800 text-gray-200 p-1 rounded-lg w-36">
-                                <ul className="text-center">
-                                    <li className="hover:underline cursor-pointer">Repostar</li>
-                                </ul>
-                            </PopoverContent>
-                        </Popover> */}
                     </div>
 
                     <div className="flex gap-4 md:gap-6 text-gray-400">
                         <div className="flex items-center gap-1">
                             <FaRegComment />
                             <span className="text-xs md:text-sm">{commentsCount} comentários</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                            <FaRegComment />
-                            <span className="text-xs md:text-sm">{repliesCount} respostas</span>
                         </div>
                     </div>
                 </div>

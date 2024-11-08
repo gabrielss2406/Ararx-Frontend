@@ -7,6 +7,7 @@ import { PostType } from "@/models/Post";
 import Post from "./post";
 import { LoadingSpinner } from "./ui/loading";
 import { Loader2 } from "lucide-react";
+import { FollowService } from "@/services/follow";
 
 interface UserProfileProps {
     user?: UserProfileType;
@@ -18,15 +19,17 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
     const pageSize = 10;
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
+    const [isFollowing, setIsFollowing] = useState(user?.isFollowing);
     const dataService = new PostService();
+    const followService = new FollowService();
     const endOfPageRef = useRef<HTMLDivElement>(null);
 
     const loadPosts = async () => {
         if (!hasMore) return;
         setLoading(true);
         try {
+            console.log(user?.isFollowing)
             const response = await dataService.getPostsFromUser(pageNum, pageSize, user?.handler);
-            console.log(response);
 
             if (response.length < pageSize) setHasMore(false);
 
@@ -39,6 +42,20 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
             console.error("Failed to load posts:", error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleFollow = async () => {
+        try {
+            if (isFollowing) {
+                await followService.unfollow(user?.handler as string);
+                setIsFollowing(false);
+            } else {
+                await followService.follow(user?.handler as string);
+                setIsFollowing(true);
+            }
+        } catch (error) {
+            console.error("Failed to follow/unfollow:", error);
         }
     };
 
@@ -91,6 +108,13 @@ const UserProfile: React.FC<UserProfileProps> = ({ user }) => {
                                 <span className="text-gray-400">Seguindo</span>
                             </div>
                         </div>
+                        <button
+                            onClick={handleFollow}
+                            className={`mt-4 px-4 py-2 rounded ${isFollowing ? 'bg-red-500' : 'bg-blue-500'
+                                } text-white`}
+                        >
+                            {isFollowing ? 'Parar de seguir' : 'Seguir'}
+                        </button>
                     </div>
 
                     <div className="mt-6">

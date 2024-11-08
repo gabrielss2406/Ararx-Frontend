@@ -19,6 +19,8 @@ export const UserProfileSchema = z.object({
     bio: z.string(),
     handler: z.string(),
     username: z.string(),
+    isFollowing: z.boolean(),
+    isMe: z.boolean(),
     followers: z.array(z.object({})),
     following: z.array(z.object({}))
 })

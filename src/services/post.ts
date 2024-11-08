@@ -19,7 +19,6 @@ api.interceptors.request.use((config) => {
 export class PostService {
     public async createPost(content: string): Promise<void> {
         try {
-            console.log(content)
             await api.post(`/posts/`, {
                 content: content
             });
@@ -32,7 +31,6 @@ export class PostService {
     public async getPosts(page_num: number, page_size: number): Promise<PostType[]> {
         try {
             const response = await api.get(`/posts?page_num=${page_num}&page_size=${page_size}`);
-            console.log(response.data)
             return response.data.sort((a: PostType, b: PostType) => compareDesc(parseISO(a.date), parseISO(b.date)));
         } catch (error) {
             console.error(error)

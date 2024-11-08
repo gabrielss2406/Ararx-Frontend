@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 type Comment = {
-    id: string;
+    _id: string;
     commented_by: string;
-    comment: string;
+    content: string;
     date: string;
     likes: string[];
     reposts: string[];
@@ -11,10 +11,10 @@ type Comment = {
 };
 
 const CommentSchema: z.ZodType<Comment> = z.object({
-    id: z.string(),
+    _id: z.string(),
     commented_by: z.string(),
-    comment: z.string(),
-    author: z.string(),
+    content: z.string(),
+    comment_by: z.string(),
     date: z.string().datetime({ offset: true }),
     likes: z.array(z.string()),
     reposts: z.array(z.string()),
@@ -43,5 +43,6 @@ export const PostDetailsSchema = z.object({
     comments: z.array(CommentSchema),
 });
 
+export type CommentType = z.infer<typeof CommentSchema>;
 export type PostDetailsType = z.infer<typeof PostDetailsSchema>;
 export type PostType = z.infer<typeof PostSchema>;

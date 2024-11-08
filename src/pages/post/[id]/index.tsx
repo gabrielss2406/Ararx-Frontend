@@ -9,7 +9,8 @@ import { PostService } from "@/services/post";
 import { LoadingSpinner } from "@/components/ui/loading";
 import ProfilePicture from "@/components/profilePicture";
 import { formatPostDate } from "@/components/helpers/formatDate";
-import { PostType } from "@/models/Post";
+import { CommentType, PostType } from "@/models/Post";
+import CreateCommentForm from "@/forms/CreateComment";
 
 const PostPage: React.FC = () => {
     const router = useRouter();
@@ -20,28 +21,32 @@ const PostPage: React.FC = () => {
     const dataService = new PostService();
     const { id: postId } = router.query;
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            try {
-                setLoading(true);
-                const returnData = await dataService.getPostById(postId as string);
-                console.log(returnData)
-                setPost(returnData);
-                setLiked(returnData.isLiked)
-                setLikes(returnData.likes.length)
-            } catch (error) {
-                toast.error("Erro ao carregar dados");
-                console.error('Erro ao carregar dados do post:', error);
-            }
-            setLoading(false);
-        };
+    const fetchPost = async () => {
+        try {
+            setLoading(true);
+            const returnData = await dataService.getPostById(postId as string);
 
-        fetchPost();
+            setPost(returnData);
+            setLiked(returnData.isLiked)
+            setLikes(returnData.likes.length)
+        } catch (error) {
+            toast.error("Erro ao carregar dados");
+            console.error('Erro ao carregar dados do post:', error);
+        }
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        if (postId) fetchPost();
     }, [postId]);
 
     const handleLike = () => {
         setLiked(!liked);
         setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    };
+
+    const handleCommentCreated = () => {
+        fetchPost();
     };
 
     return (
@@ -83,51 +88,46 @@ const PostPage: React.FC = () => {
                                         )}
                                         <span>{likes}</span>
                                     </button>
-
-                                    {/* <button className="flex items-center gap-1 text-gray-400 hover:text-blue-500 transition-colors duration-200">
-                                        <FaShareAlt />
-                                        <span>Compartilhar</span>
-                                    </button> */}
                                 </div>
 
                                 <div className="text-gray-400">
-                                    <span>{post.comments.length} respostas</span>
+                                    <span>{post.comments.length} comentários</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-8">
+                    <div className="p-6">
+                        <CreateCommentForm onCommentCreated={handleCommentCreated} parentId={post._id} />
+                    </div>
+
+                    <div>
                         <h2 className="text-xl text-white">Comentários</h2>
                         {post.comments.length > 0 ? (
-                            // post.comments.map((comment: any) => (
-                            //     <div key={comment._id} className="flex items-start gap-4 mt-4 bg-gray-800 p-4 rounded-lg">
-                            //         <Link href={`/profile/${comment.author}`} passHref>
-                            //             <Avatar>
-                            //                 <AvatarImage
-                            //                     className="w-10 h-10 rounded-full"
-                            //                     src="https://github.com/shadcn.png"
-                            //                     alt="User avatar"
-                            //                 />
-                            //                 <AvatarFallback>{comment.author.charAt(0)}</AvatarFallback>
-                            //             </Avatar>
-                            //         </Link>
-                            //         <div className="flex flex-col w-full">
-                            //             <div className="flex items-center justify-between">
-                            //                 <div className="flex items-center gap-2">
-                            //                     <Link href={`/profile/${comment.author}`} passHref>
-                            //                         <span className="font-semibold text-white cursor-pointer hover:underline">
-                            //                             {comment.author}
-                            //                         </span>
-                            //                     </Link>
-                            //                     <span className="text-sm text-gray-400">{new Date(comment.date).toLocaleString()}</span>
-                            //                 </div>
-                            //             </div>
-                            //             <p className="mt-1 text-gray-200">{comment.content}</p>
-                            //         </div>
-                            //     </div>
-                            // ))
-                            <p>oi</p>
+                            post.comments.map((comment: CommentType) => (
+                                <div key={comment._id} className="flex items-start gap-4 mt-4 bg-gray-800 p-4 rounded-lg">
+                                    <Link href={`/profile/${comment.commented_by}`} passHref>
+                                        <Avatar className="cursor-pointer">
+                                            <ProfilePicture handler={comment.commented_by || ""} />
+                                        </Avatar>
+                                    </Link>
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <Link href={`/profile/${comment.commented_by}`} passHref>
+                                                    <span
+                                                        className="font-semibold text-white cursor-pointer hover:underline text-sm md:text-base"
+                                                    >
+                                                        <span className="text-xs md:text-sm text-gray-400">@{comment.commented_by}</span>
+                                                    </span>
+                                                </Link>
+                                                <span className="text-sm text-gray-400">{formatPostDate(comment.date)}</span>
+                                            </div>
+                                        </div>
+                                        <p className="mt-1 text-gray-200">{comment.content}</p>
+                                    </div>
+                                </div>
+                            ))
                         ) : (
                             <p className="text-gray-400">Nenhum comentário ainda.</p>
                         )}
