@@ -7,10 +7,12 @@ import HomeButton from "@/components/homeButton";
 import { toast } from "sonner";
 import { PostService } from "@/services/post";
 import { LoadingSpinner } from "@/components/ui/loading";
+import Comment from "@/components/comment"
 import ProfilePicture from "@/components/profilePicture";
 import { formatPostDate } from "@/components/helpers/formatDate";
 import { CommentType, PostType } from "@/models/Post";
 import CreateCommentForm from "@/forms/CreateComment";
+import { PostInteractService } from "@/services/postInteract";
 
 const PostPage: React.FC = () => {
     const router = useRouter();
@@ -19,6 +21,7 @@ const PostPage: React.FC = () => {
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
     const dataService = new PostService();
+    const postInteractService = new PostInteractService();
     const { id: postId } = router.query;
 
     const fetchPost = async () => {
@@ -40,9 +43,19 @@ const PostPage: React.FC = () => {
         if (postId) fetchPost();
     }, [postId]);
 
-    const handleLike = () => {
-        setLiked(!liked);
-        setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    const handleLike = async () => {
+        try {
+            if (liked) {
+                await postInteractService.dislike(postId as string);
+                setLikes((prev) => prev - 1);
+            } else {
+                await postInteractService.like(postId as string);
+                setLikes((prev) => prev + 1);
+            }
+            setLiked(!liked);
+        } catch (error) {
+            console.error("Erro ao curtir ou remover curtida no post:", error);
+        }
     };
 
     const handleCommentCreated = () => {
@@ -105,28 +118,10 @@ const PostPage: React.FC = () => {
                         <h2 className="text-xl text-white">Comentários</h2>
                         {post.comments.length > 0 ? (
                             post.comments.map((comment: CommentType) => (
-                                <div key={comment._id} className="flex items-start gap-4 mt-4 bg-gray-800 p-4 rounded-lg">
-                                    <Link href={`/profile/${comment.commented_by}`} passHref>
-                                        <Avatar className="cursor-pointer">
-                                            <ProfilePicture handler={comment.commented_by || ""} />
-                                        </Avatar>
-                                    </Link>
-                                    <div className="flex flex-col w-full">
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-2">
-                                                <Link href={`/profile/${comment.commented_by}`} passHref>
-                                                    <span
-                                                        className="font-semibold text-white cursor-pointer hover:underline text-sm md:text-base"
-                                                    >
-                                                        <span className="text-xs md:text-sm text-gray-400">@{comment.commented_by}</span>
-                                                    </span>
-                                                </Link>
-                                                <span className="text-sm text-gray-400">{formatPostDate(comment.date)}</span>
-                                            </div>
-                                        </div>
-                                        <p className="mt-1 text-gray-200">{comment.content}</p>
-                                    </div>
-                                </div>
+                                <Comment
+                                    key={comment._id}
+                                    comment={comment}
+                                />
                             ))
                         ) : (
                             <p className="text-gray-400">Nenhum comentário ainda.</p>

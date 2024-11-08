@@ -22,7 +22,25 @@ export class CommentService {
             });
         } catch (error) {
             console.error(error)
-            throw new Error('Create commnet failed');
+            throw new Error('Create comment failed');
+        }
+    }
+
+    public async likeComment(commentId: string): Promise<void> {
+        try {
+            await api.put(`/comments/like/${commentId}`);
+        } catch (error) {
+            console.error(error)
+            throw new Error('Like comment failed');
+        }
+    }
+
+    public async unlikeComment(commentId: string): Promise<void> {
+        try {
+            await api.put(`/comments/dislike/${commentId}`);
+        } catch (error) {
+            console.error(error)
+            throw new Error('Like comment failed');
         }
     }
 }
