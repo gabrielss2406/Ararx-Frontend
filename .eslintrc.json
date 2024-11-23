@@ -1,14 +1,8 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "next/typescript",
-    "prettier"
-  ],
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
   "overrides": [
     {
-      "files": [
-        "src/components/ui/textarea.tsx"
-      ],
+      "files": ["src/components/ui/textarea.tsx"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off"
       }

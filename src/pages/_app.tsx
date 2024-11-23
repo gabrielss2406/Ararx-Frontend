@@ -1,7 +1,13 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Toaster } from "sonner";
-import { FaCheckCircle, FaInfoCircle, FaTimesCircle, FaExclamationTriangle, FaSpinner } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaInfoCircle,
+  FaTimesCircle,
+  FaExclamationTriangle,
+  FaSpinner,
+} from "react-icons/fa";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

@@ -22,8 +22,8 @@ const Home: React.FC = () => {
       if (response.length < pageSize) setHasMore(false);
 
       setPosts((prevPosts) => {
-        const existingIds = new Set(prevPosts.map(post => post._id));
-        const newPosts = response.filter(post => !existingIds.has(post._id));
+        const existingIds = new Set(prevPosts.map((post) => post._id));
+        const newPosts = response.filter((post) => !existingIds.has(post._id));
         return [...prevPosts, ...newPosts];
       });
     } catch (error) {
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
           setPageNum((prevPage) => prevPage + 1);
         }
       },
-      { threshold: 1 }
+      { threshold: 1 },
     );
 
     if (endOfPageRef.current) {
@@ -64,7 +64,6 @@ const Home: React.FC = () => {
       }
     };
   }, [endOfPageRef, hasMore, loading]);
-
 
   return (
     <div className="h-screen w-full bg-[#15202B] px-[10%]">
@@ -86,11 +85,11 @@ const Home: React.FC = () => {
           />
         </div>
       ))}
-      {loading &&
+      {loading && (
         <div className="w-full flex justify-center p-2">
           <Loader2 className="animate-spin h-12 w-12 text-white" />
         </div>
-      }
+      )}
       <div ref={endOfPageRef} className="h-40"></div>
     </div>
   );
