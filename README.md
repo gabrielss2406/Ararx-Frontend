@@ -4,7 +4,6 @@ Frontend da rede social Ararx, um projeto para o laboratório de Engenharia de S
 
 O Ararx é uma inspiração de um twitter (agora X) simplificado, com funções de postar, curtir e comentar posts, além de seguir outros usuários.
 
-
 ## 🚀 Instalação e execução local
 
 Instale as dependências
@@ -20,6 +19,7 @@ Rode o projeto localmente
 ```
 
 Ele rodará em http://localhost:3000
+
 ## 🌟 Funcionalidades
 
 - 🔐 Registro e login de usuários
@@ -29,11 +29,10 @@ Ele rodará em http://localhost:3000
 - 💬 Responder e curtir comentários
 - 👤 Visualização de perfis de usuários
 - ➕ Seguir outros usuários
+
 ## 🛠️ Stack utilizada
 
 **Front-end:** React, Next.js
-
-
 
 ## 🔧 Variáveis de Ambiente
 
@@ -43,16 +42,12 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 
 `NEXT_PUBLIC_API_KEY`
 
-
-
 ## 🔗 Projetos Relacionados
 
 Este projeto consome uma API desenvolvida para a mesma disciplina. Confira o backend do Ararx:
 
 [Ararx Backend](https://github.com/markinh00/C214-Ararx-backend)
 
-
 ## 👥 Autores
 
 [Gabriel Siqueira](https://github.com/gabrielss2406)
-
